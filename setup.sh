@@ -1,6 +1,6 @@
 #!/bin/bash
 # KDOS Branding Setup Script
-# Run with: curl -fsSL RAW_URL/setup.sh | bash
+# Run with: curl -fsSL https://raw.githubusercontent.com/kdaui/kdos-setup/main/setup.sh | bash
 
 set -e
 
@@ -14,7 +14,8 @@ cat > ~/.config/kdos/restore-branding.sh << 'SCRIPT'
 #!/bin/bash
 # Restore KDOS branding after system updates
 
-OS_RELEASE_CONTENT='NAME="KDOS"
+pkexec tee /etc/os-release > /dev/null << 'EOF'
+NAME="KDOS"
 VERSION="43 (Based on Fedora)"
 RELEASE_TYPE=stable
 ID=fedora
@@ -36,13 +37,11 @@ REDHAT_SUPPORT_PRODUCT_VERSION=43
 SUPPORT_END=2026-12-02
 VARIANT="KDE Plasma Desktop Edition"
 VARIANT_ID=kde
-'
+EOF
 
-FEDORA_RELEASE_CONTENT='KDOS 43 (Based on Fedora)
-'
-
-echo "$OS_RELEASE_CONTENT" > /etc/os-release
-echo "$FEDORA_RELEASE_CONTENT" > /etc/fedora-release
+pkexec tee /etc/fedora-release > /dev/null << 'EOF'
+KDOS 43 (Based on Fedora)
+EOF
 SCRIPT
 
 chmod +x ~/.config/kdos/restore-branding.sh
