@@ -50,11 +50,17 @@ chmod +x ~/.config/kdos/restore-branding.sh
 cat > ~/.local/bin/dnf << 'WRAPPER'
 #!/bin/bash
 # KDOS dnf wrapper - restores branding after updates
+
 /usr/bin/dnf "$@"
 EXIT_CODE=$?
 
+# Only restore branding after actual upgrade operations
 if [ $EXIT_CODE -eq 0 ]; then
-    bash ~/.config/kdos/restore-branding.sh 2>/dev/null || true
+    case "$1" in
+        update|upgrade|distro-sync|reinstall|downgrade)
+            bash ~/.config/kdos/restore-branding.sh 2>/dev/null || true
+            ;;
+    esac
 fi
 
 exit $EXIT_CODE
