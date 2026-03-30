@@ -1,6 +1,6 @@
 #!/bin/bash
 # KDOS Branding Setup Script
-# Run with: curl -fsSL https://raw.githubusercontent.com/kdaui/kdos-setup/main/setup.sh | bash
+# Run with: curl -fsSL https://raw.githubusercontent.com/kdaui/kdos-setup/master/setup.sh | bash
 
 set -e
 
